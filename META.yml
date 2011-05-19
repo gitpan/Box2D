@@ -1,0 +1,30 @@
+---
+abstract: '2D Physics Library'
+author:
+  - 'Kartik Thakore <kthakore@CPAN.org>'
+build_requires:
+  Alien::Box2D: 0
+  ExtUtils::Typemap::Basic: 0.04
+  ExtUtils::Typemap::ObjectMap: 0
+  ExtUtils::Typemap::STL::String: 0.04
+  ExtUtils::XSpp: 0.16
+  Test::More: 0
+configure_requires:
+  ExtUtils::CppGuess: 0.05
+  Module::Build: 0.36
+  Module::Build::WithXSpp: 0.09
+generated_by: 'Module::Build version 0.3603'
+license: perl
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+name: Box2D
+provides:
+  Box2D:
+    file: lib/Box2D.pm
+    version: 0.01
+  Box2D::b2ContactListener:
+    file: lib/Box2D/b2ContactListener.pm
+resources:
+  license: http://dev.perl.org/licenses/
+version: 0.01

@@ -1,0 +1,28 @@
+use strict;
+use warnings;
+use Alien::Box2D;
+use Module::Build::WithXSpp;
+
+push @INC, "build";
+
+my $builder = Module::Build::WithXSpp->new(
+    module_name         => 'Box2D',
+    license             => 'perl',
+    dist_author         => q{Kartik Thakore <kthakore@CPAN.org>},
+    dist_version_from   => 'lib/Box2D.pm',
+    build_requires => {
+        'Test::More' => 0,
+		'Alien::Box2D' => 0,
+        'ExtUtils::XSpp' => 0.14,
+    },
+    add_to_cleanup      => [ 'Box2D-*' ],
+	extra_typemap_modules => { 
+		'ExtUtils::Typemap::ObjectMap' => '0',
+		'ExtUtils::Typemap::STL::String' => '0.04',
+    'ExtUtils::Typemap::Basic'       => '0.04',
+	},
+	extra_compiler_flags => [ Alien::Box2D->config('cflags') ],
+	extra_linker_flags => [ Alien::Box2D->config('libs') ]
+);
+
+$builder->create_build_script();
