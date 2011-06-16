@@ -52,7 +52,7 @@ b2Body::GetTransform( )
 		const char* CLASS = "Box2D::b2Transform";
 	CODE:
 		b2Transform bt = THIS->GetTransform();
-		RETVAL = &bt;
+		RETVAL = new b2Transform(bt);
 	OUTPUT:
 		RETVAL
 
@@ -105,7 +105,7 @@ b2Body::GetLinearVelocity()
 		const char* CLASS = "Box2D::b2Vec2";
 	CODE:
 		b2Vec2 lv = THIS->GetLinearVelocity();
-		RETVAL =  &lv;
+		RETVAL = new b2Vec2(lv);
 	OUTPUT:
 		RETVAL 
 

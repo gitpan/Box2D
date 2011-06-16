@@ -10,9 +10,12 @@ my $builder = Module::Build::WithXSpp->new(
     license             => 'perl',
     dist_author         => q{Kartik Thakore <kthakore@CPAN.org>},
     dist_version_from   => 'lib/Box2D.pm',
+    configure_requires => {
+        'Module::Build' => 0.38,
+    },
     build_requires => {
         'Test::More' => 0,
-		'Alien::Box2D' => 0,
+        'Alien::Box2D' => 0.103,
         'ExtUtils::XSpp' => 0.14,
     },
     add_to_cleanup      => [ 'Box2D-*' ],
@@ -24,5 +27,8 @@ my $builder = Module::Build::WithXSpp->new(
 	extra_compiler_flags => [ Alien::Box2D->config('cflags') ],
 	extra_linker_flags => [ Alien::Box2D->config('libs') ]
 );
+
+# early_includes will be included right before perl.h in main.xs
+$builder->early_includes( [ qw( "sys/vnode.h" ) ] ) if $^O eq 'solaris';
 
 $builder->create_build_script();

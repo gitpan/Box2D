@@ -73,6 +73,8 @@ sub makeBody {
     $body->CreateFixtureDef($fixtureDef);
     # record the body
      $bodies{ $bodyCount++ } = $body; 
+
+	$body->SetUserData( sub{ warn "Ok so subroutines can be done: Body count".$bodyCount; } );
 	 
     return $body;
 }
@@ -155,8 +157,22 @@ my $postSolve = 0;
 
 # These listeners fire when a contact occurs
 
-$listener->SetBeginContactSub(sub { warn "BeginContact!"; warn @_; $beginContact++;  } );
-$listener->SetEndContactSub(sub { warn "EndContact!"; warn @_; $endContact++;  } );
+$listener->SetBeginContactSub(
+	sub { 
+		my $contact = shift; 
+		my $fix_a = $contact->GetFixtureA(); 
+		my $fix_b = $contact->GetFixtureB();   
+		my $body_a = $fix_a->GetBody();
+		my $body_b = $fix_b->GetBody(); 
+
+
+		my $sub_a =  $body_a->GetUserData(); 
+		$sub_a->() if $sub_a;
+		my $sub_b = $body_b->GetUserData();
+		$sub_b->() if $sub_b;
+		$beginContact++;  } 
+	);
+$listener->SetEndContactSub(sub {  $endContact++;  } );
 #$listener->SetPreSolveSub(sub { warn "PreSolve!"; warn @_; $preSolve++;  } );
 #$listener->SetPostSolveSub(sub { warn "PostSolve!"; warn @_; $postSolve++; });
 
