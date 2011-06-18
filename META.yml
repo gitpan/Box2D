@@ -10,6 +10,7 @@ build_requires:
   ExtUtils::XSpp: 0.16
   Test::More: 0
 configure_requires:
+  Alien::Box2D: 0.103
   ExtUtils::CppGuess: 0.05
   Module::Build: 0.38
   Module::Build::WithXSpp: 0.09
@@ -23,10 +24,10 @@ name: Box2D
 provides:
   Box2D:
     file: lib/Box2D.pm
-    version: 0.02
+    version: 0.03
   Box2D::b2ContactListener:
     file: lib/Box2D/b2ContactListener.pm
     version: 0
 resources:
   license: http://dev.perl.org/licenses/
-version: 0.02
+version: 0.03
