@@ -27,7 +27,7 @@
       "configure" : {
          "requires" : {
             "Alien::Box2D" : "0.103",
-            "ExtUtils::CppGuess" : "0.05",
+            "ExtUtils::CppGuess" : "0.07",
             "Module::Build" : "0.38",
             "Module::Build::WithXSpp" : "0.09"
          }
@@ -36,7 +36,7 @@
    "provides" : {
       "Box2D" : {
          "file" : "lib/Box2D.pm",
-         "version" : "0.03"
+         "version" : "0.04"
       },
       "Box2D::b2ContactListener" : {
          "file" : "lib/Box2D/b2ContactListener.pm",
@@ -49,5 +49,5 @@
          "http://dev.perl.org/licenses/"
       ]
    },
-   "version" : "0.03"
+   "version" : "0.04"
 }
