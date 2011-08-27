@@ -3,74 +3,92 @@ use warnings;
 use Box2D;
 use Test::More;
 
+ok( Box2D::b2Math::b2IsValid(0.0),  "b2IsValid" );
+ok( Box2D::b2Math::b2IsValid(1.0),  "b2IsValid" );
+ok( Box2D::b2Math::b2IsValid(-1.0), "b2IsValid" );
 
-my $vec = Box2D::b2Vec2->new( 10, 10 );
+cmp_ok( abs( Box2D::b2Math::b2InvSqrt(4.0) - 0.5 ), "<=", 0.001,
+    "b2InvSqrt" );
 
-ok ( $vec );
+is( Box2D::b2Math::b2Abs(1.0),  1.0, "b2Abs" );
+is( Box2D::b2Math::b2Abs(-1.0), 1.0, "b2Abs" );
 
-is( $vec->x, 10 );
-is( $vec->y, 10 );
+my $a = Box2D::b2Vec2->new( 1, 2 );
+my $b = Box2D::b2Vec2->new( 3, 4 );
+my $m = Box2D::b2Mat22->new( 5, 6, 7, 8 );
+my $s = 9;
 
-$vec->Set(5,5);
+{
+    my $c = Box2D::b2Math::b2DotV2V2( $a, $b );
+    is( $c, $a->x * $b->x + $a->y * $b->y, "b2DotV2V2" );
+}
 
+{
+    my $c = Box2D::b2Math::b2CrossV2V2( $a, $b );
+    is( $c, $a->x * $b->y - $a->y * $b->x, "b2CrossV2V2" );
+}
 
-is( $vec->x, 5 );
-is( $vec->y, 5 );
+{
+    my $c = Box2D::b2Math::b2CrossV2S( $a, $s );
+    is( $c->x, $s * $a->y,  "b2CrossV2S" );
+    is( $c->y, -$s * $a->x, "b2CrossV2S" );
+}
 
-cmp_ok( abs($vec->Length() - 7.07106781005859), '<', 0.00000001 );
+{
+    my $c = Box2D::b2Math::b2CrossSV2( $s, $a );
+    is( $c->x, -$s * $a->y, "b2CrossSV2" );
+    is( $c->y, $s * $a->x,  "b2CrossSV2" );
+}
 
-is( $vec->LengthSquared(), 50);
+{
+    my $c = Box2D::b2Math::b2MulM22V2( $m, $a );
+    is( $c->x, $m->col1->x * $a->x + $m->col2->x * $a->y, "b2MulM22V2" );
+    is( $c->y, $m->col1->y * $a->x + $m->col2->y * $a->y, "b2MulM22V2" );
+}
 
-cmp_ok( abs($vec->Normalize() - 7.07106781005859), '<', 0.00000001 );
+{
+    my $c = Box2D::b2Math::b2MulTM22V2( $m, $a );
+    is( $c->x, Box2D::b2Math::b2DotV2V2( $a, $m->col1 ), "b2MulTM22V2" );
+    is( $c->y, Box2D::b2Math::b2DotV2V2( $a, $m->col2 ), "b2MulTM22V2" );
+}
 
-ok ( ! defined $vec->SetZero()  );
+{
+    my $c = Box2D::b2Math::b2AddV2V2( $a, $b );
+    is( $c->x, $a->x + $b->x, "b2AddV2V2" );
+    is( $c->y, $a->y + $b->y, "b2AddV2V2" );
+}
 
-is( $vec->x, 0 );
-is( $vec->y, 0 );
+{
+    my $c = Box2D::b2Math::b2SubV2V2( $a, $b );
+    is( $c->x, $a->x - $b->x, "b2SubV2V2" );
+    is( $c->y, $a->y - $b->y, "b2SubV2V2" );
+}
 
-is( $vec->IsValid(), '1' );
+{
+    my $c = Box2D::b2Math::b2MulSV2( $s, $a );
+    is( $c->x, $s * $a->x, "b2MulSV2" );
+    is( $c->y, $s * $a->y, "b2MulSV2" );
+}
 
-my ( $a11, $a12, $a21, $a22 ) = ( 1.0, 2.0, 3.0, 4.0 );
-my $matrix = Box2D::b2Mat22->new( $a11, $a12, $a21, $a22 );
-ok( $matrix );
-isa_ok( $matrix, "Box2D::b2Mat22" );
-is( $matrix->col1->x, $a11 );
-is( $matrix->col2->x, $a12 );
-is( $matrix->col1->y, $a21 );
-is( $matrix->col2->y, $a22 );
+{
+    ok( !( Box2D::b2Math::b2EqlV2V2( $a, $b ) ), "b2EqlV2V2" );
+    ok( !( Box2D::b2Math::b2EqlV2V2( $b, $a ) ), "b2EqlV2V2" );
+    ok( Box2D::b2Math::b2EqlV2V2( $a, $a ), "b2EqlV2V2" );
+    ok( Box2D::b2Math::b2EqlV2V2( $b, $b ), "b2EqlV2V2" );
 
-my ( $b11, $b12, $b21, $b22 ) = ( 1.0, 2.0, 3.0, 4.0 );
-$matrix->Set( Box2D::b2Vec2->new($b11, $b21), Box2D::b2Vec2->new($b12, $b22) );
-is( $matrix->col1->x, $b11, "Set a11" );
-is( $matrix->col2->x, $b12, "Set a12" );
-is( $matrix->col1->y, $b21, "Set a21" );
-is( $matrix->col2->y, $b22, "Set a22" );
+    my $c = Box2D::b2Vec2->new( $a->x, $a->y );
+    ok( Box2D::b2Math::b2EqlV2V2( $a, $c ), "b2EqlV2V2" );
+}
 
-$matrix->SetIdentity();
-is( $matrix->col1->x, 1, "SetIdentity a11" );
-is( $matrix->col2->x, 0, "SetIdentity a12" );
-is( $matrix->col1->y, 0, "SetIdentity a21" );
-is( $matrix->col2->y, 1, "SetIdentity a22" );
+{
+    my $c = Box2D::b2Math::b2Distance( $a, $b );
+    is( $c, Box2D::b2Math::b2SubV2V2( $a, $b )->Length, "b2Distance" );
+}
 
-my $col1 = Box2D::b2Vec2->new( $b11, $b21 );
-my $col2 = Box2D::b2Vec2->new( $b12, $b22 );
-$matrix->Set( $col2, $col2 );
-$matrix->SetZero();
-is( $matrix->col1->x, 0, "SetZero a11" );
-is( $matrix->col2->x, 0, "SetZero a12" );
-is( $matrix->col1->y, 0, "SetZero a21" );
-is( $matrix->col2->y, 0, "SetZero a22" );
-
-my ( $x, $y, $angle ) = ( 7.0, 9.0, 1.0 );
-my $position = Box2D::b2Vec2->new( $x, $y );
-my $R = Box2D::b2Mat22->new();
-$R->SetAngle($angle);
-my $transform = Box2D::b2Transform->new( $position, $R );
-ok( $transform );
-isa_ok( $transform, "Box2D::b2Transform" );
-
-is( $transform->position->x, $x );
-is( $transform->position->y, $y );
-is( $transform->GetAngle(), $angle );
+{
+    my $c = Box2D::b2Math::b2DistanceSquared( $a, $b );
+    my $d = Box2D::b2Math::b2SubV2V2( $a, $b );
+    is( $c, Box2D::b2Math::b2DotV2V2( $d, $d ), "b2DistanceSquared" );
+}
 
 done_testing;

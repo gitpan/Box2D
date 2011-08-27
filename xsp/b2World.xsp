@@ -6,18 +6,15 @@
 
 %module{Box2D};
 
-%name{Box2D::b2World} class b2World 
-{ 
-    void ClearForces();
+%name{Box2D::b2World} class b2World
+{
 
-
-~b2World();
+void ClearForces();
 
 %{
 
-
-b2World* 
-b2World::new( gravity, doSleep)
+b2World*
+b2World::new( gravity, doSleep )
 	b2Vec2* gravity
 	bool doSleep
 	CODE:
@@ -35,13 +32,13 @@ b2World::SetGravity( gravity )
 
 b2Vec2*
 b2World::GetGravity()
-	PREINIT:	
+	PREINIT:
 		const char* CLASS = "Box2D::b2Vec2";
 	CODE:
 		b2Vec2* ret = new b2Vec2(THIS->GetGravity());
 		RETVAL = ret;
 	OUTPUT:
-		RETVAL 
+		RETVAL
 
 
 void
@@ -78,14 +75,29 @@ b2World::DestroyBody( body )
 	CODE:
 		THIS->DestroyBody( body );
 
-void 
+void
 b2World::SetContactListenerXS( listener )
-        b2ContactListener* listener  
+	b2ContactListener* listener
 	CODE:
-                /* fprintf(stderr,"Contact Listener Set!\n\n\n"); */
 		THIS->SetContactListener( listener );
 
+void
+b2World::RayCastXS( callback, point1, point2 )
+	b2RayCastCallback* callback
+	b2Vec2* point1
+	b2Vec2* point2
+	CODE:
+		THIS->RayCast( callback, *point1, *point2 );
+
+void
+b2World::DESTROY()
+	CODE:
+		if ( THIS != NULL )
+		{
+			delete THIS;
+		}
+
 %}
-	
+
 };
 

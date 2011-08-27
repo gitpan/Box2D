@@ -1,5 +1,16 @@
 Revision history for Box2D
 
+0.05    27/08/2011
+        Added b2RayCastCallback and PerlRayCastCallback [jtpalmer]
+        Changes to b2Vec2 [jtpalmer]
+        Added operator overloading to b2Vec2 [jtpalmer]
+        Added b2Math [jtpalmer]
+        Additions to b2Shape [jtpalmer]
+        Added b2MassData [jtpalmer]
+        Added b2AABB [jtpalmer]
+        Added b2RayCastInput, b2RayCastOutput [jtpalmer]
+        Updated meta resources with github info [jtpalmer]
+
 0.04    26/07/2011
         Added pendulum example [jtpalmer, zpmorgan]
         Added breakable example [jtpalmer]
@@ -36,7 +47,7 @@ Revision history for Box2D
         Added b2CircleShape, tests and example [jtpalmer]
         added early_include for solaris to inject sys/vnode.h [FROGGS]
 
-0.01    19/05/2011 
+0.01    19/05/2011
         First version, released on an unsuspecting world.
         Added basic set of classes
         Added perl contact listeners

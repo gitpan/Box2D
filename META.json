@@ -4,7 +4,7 @@
       "Kartik Thakore <kthakore@CPAN.org>"
    ],
    "dynamic_config" : 1,
-   "generated_by" : "Module::Build version 0.38, CPAN::Meta::Converter version 2.110930",
+   "generated_by" : "Module::Build version 0.38, CPAN::Meta::Converter version 2.112150",
    "license" : [
       "perl_5"
    ],
@@ -29,25 +29,39 @@
             "Alien::Box2D" : "0.103",
             "ExtUtils::CppGuess" : "0.07",
             "Module::Build" : "0.38",
-            "Module::Build::WithXSpp" : "0.09"
+            "Module::Build::WithXSpp" : "0.10"
          }
       }
    },
    "provides" : {
       "Box2D" : {
          "file" : "lib/Box2D.pm",
-         "version" : "0.04"
+         "version" : "0.05"
       },
       "Box2D::b2ContactListener" : {
          "file" : "lib/Box2D/b2ContactListener.pm",
+         "version" : 0
+      },
+      "Box2D::b2RayCastCallback" : {
+         "file" : "lib/Box2D/b2RayCastCallback.pm",
+         "version" : 0
+      },
+      "Box2D::b2Vec2" : {
+         "file" : "lib/Box2D.pm",
          "version" : 0
       }
    },
    "release_status" : "stable",
    "resources" : {
+      "bugtracker" : {
+         "web" : "https://github.com/PerlGameDev/Box2D-perl/issues"
+      },
       "license" : [
          "http://dev.perl.org/licenses/"
-      ]
+      ],
+      "repository" : {
+         "url" : "https://github.com/PerlGameDev/Box2D-perl"
+      }
    },
-   "version" : "0.04"
+   "version" : "0.05"
 }
