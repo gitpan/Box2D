@@ -7,6 +7,7 @@ push @INC, "build";
 
 my $builder = Module::Build::WithXSpp->new(
     module_name         => 'Box2D',
+    dist_abstract       => '2D Physics Library',
     license             => 'perl',
     dist_author         => q{Kartik Thakore <kthakore@CPAN.org>},
     dist_version_from   => 'lib/Box2D.pm',
@@ -18,6 +19,9 @@ my $builder = Module::Build::WithXSpp->new(
         'Test::More'     => 0,
         'Alien::Box2D'   => 0.103,
         'ExtUtils::XSpp' => 0.14,
+	    'ExtUtils::Typemap::ObjectMap'   => '0',
+        'ExtUtils::Typemap::STL::String' => '0',
+        'ExtUtils::Typemap::Basic'       => '0',
     },
     add_to_cleanup      => [ 'Box2D-*' ],
     extra_typemap_modules => {

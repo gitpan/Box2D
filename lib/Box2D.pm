@@ -4,80 +4,7 @@ use warnings;
 use strict;
 our @ISA = qw(Exporter);
 
-=head1 NAME
-
-Box2D - 2D Physics Library
-
-=head1 OVERVIEW
-
-Currently this module is a 1 to 1 binding. This is still a WIP and so far here are the completed class:
-
-	b2AABB
-	b2Body
-	b2BodyDef
-	b2CircleShape
-	b2Contact
-	b2ContactImpulse
-	b2ContactListener
-	b2DistanceJoint
-	b2DistanceJointDef
-	b2Filter
-	b2Fixture
-	b2FixtureDef
-	b2FrictionJoint
-	b2FrictionJointDef
-	b2GearJoint
-	b2GearJointDef
-	b2Joint
-	b2JointDef
-	b2LineJoint
-	b2LineJointDef
-	b2Manifold
-	b2MassData
-	b2Mat22
-	b2MouseJoint
-	b2MouseJointDef
-	b2PolygonShape
-	b2PrismaticJoint
-	b2PrismaticJointDef
-	b2PulleyJoint
-	b2PulleyJointDef
-	b2RayCastCallback
-	b2RayCastInput
-	b2RayCastOutput
-	b2RevoluteJoint
-	b2RevoluteJointDef
-	b2Shape
-	b2Transform
-	b2Vec2
-	b2WeldJoint
-	b2WeldJointDef
-	b2World
-
-=head2 USAGE
-
-Have a look at the examples folder for useage examples.
-
-The Box2D Manual and Documentation are also useful:
-
-L<http://www.box2d.org/documentation.html>
-
-=head2 TODO
-
-	Documentation
-	Examples
-	Adding more bindings
-	Inline::C Support
-
-=head2 CONTRIBUTE
-
-To contribute to this module please contact us on github:
-
-L<https://github.com/PerlGameDev/Box2D-perl>
-
-=cut
-
-our $VERSION = '0.05';
+our $VERSION = '0.06';
 
 require XSLoader;
 XSLoader::load( 'Box2D', $VERSION );
@@ -123,7 +50,8 @@ BEGIN {
     };
 }
 
-package Box2D::b2Vec2;
+package    # Hide from PAUSE
+    Box2D::b2Vec2;
 
 use overload
     '+'    => '_add',
